@@ -226,7 +226,7 @@ class AcademiSearchApp {
 
         // Filters
         document.getElementById('tema-filter').addEventListener('change', () => {
-            this.applyFilters();
+            this.applyFiltersFront();
         });
 
         document.getElementById('score-filter').addEventListener('change', () => {
@@ -234,7 +234,7 @@ class AcademiSearchApp {
         });
 
         document.getElementById('type-filter').addEventListener('change', () => {
-            this.applyFilters();
+            this.applyFiltersFront();
         });
 
         document.getElementById('clear-filters').addEventListener('click', () => {
@@ -336,14 +336,30 @@ class AcademiSearchApp {
 
     // Filter functionality
     applyFilters() {
-        const searchTerm = document.getElementById('search-input').value.toLowerCase();
+        const scoreFilter = parseFloat(document.getElementById('score-filter').value) || 0;
+
+        this.filteredArticles = this.allArticles.filter(articulo => {
+            const matchesScore = articulo.score >= scoreFilter;
+            return matchesScore;
+        });
+
+        this.filteredArticles.sort((a, b) => b.score - a.score);
+
+        this.renderResults();
+    }
+
+    applyFiltersFront() {
+        // const searchTerm = document.getElementById('search-input').value.toLowerCase();
         const temaFilter = document.getElementById('tema-filter').value;
         const scoreFilter = parseFloat(document.getElementById('score-filter').value) || 0;
         const typeFilter = document.getElementById('type-filter').value;
 
         this.filteredArticles = this.allArticles.filter(articulo => {
+            const matchesTema = !temaFilter || temaFilter.includes(articulo.tema);
             const matchesScore = articulo.score >= scoreFilter;
-            return matchesScore;
+            const matchesType = !typeFilter || articulo.tipo === typeFilter;
+
+            return matchesTema && matchesScore && matchesType;
         });
 
         // Sort by score (relevance) descending
@@ -351,6 +367,7 @@ class AcademiSearchApp {
 
         this.renderResults();
     }
+
 
     clearFilters() {
         document.getElementById('tema-filter').value = '';
