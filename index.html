@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BioSearch - By KanCode</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <div class="header__content">
+                <div class="header__logo">
+                    <h1>🎓 BioSearch</h1>
+                </div>
+                
+                <div class="header__profile">
+                    <label for="profile-select" class="form-label">Perfil:</label>
+                    <select id="profile-select" class="form-control profile-select">
+                        <option value="estudiante">👨‍🎓 Estudiante</option>
+                        <option value="investigador">🔬 Investigador</option>
+                        <option value="gestor">📊 Gestor</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main">
+        <div class="container">
+            <div class="main__grid">
+                <!-- Left Sidebar - Filters -->
+                <aside class="sidebar sidebar--left">
+                    <div class="card">
+                        <div class="card__header">
+                            <h3>Filtros</h3>
+                        </div>
+                        <div class="card__body">
+                            <div class="form-group">
+                                <label for="tema-filter" class="form-label">Categoría</label>
+                                <select id="tema-filter" class="form-control">
+                                    <option value="">Todas las categorías</option>
+                                </select>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="score-filter" class="form-label">Relevancia mínima</label>
+                                <select id="score-filter" class="form-control">
+                                    <option value="">Todas</option>
+                                    <option value="0.8">Alta (0.8+)</option>
+                                    <option value="0.6">Media (0.6+)</option>
+                                    <option value="0.4">Baja (0.4+)</option>
+                                </select>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="type-filter" class="form-label">Tipo</label>
+                                <select id="type-filter" class="form-control">
+                                    <option value="">Todos los tipos</option>
+                                    <option value="research-article">Artículo de Investigación</option>
+                                </select>
+                            </div>
+                            
+                            <button id="clear-filters" class="btn btn--secondary btn--full-width">
+                                Limpiar Filtros
+                            </button>
+                        </div>
+                    </div>
+                </aside>
+
+                <!-- Center Content -->
+                <div class="content">
+                    <!-- Search Bar -->
+                    <div class="search-section">
+                        <div class="search-bar">
+                            <input type="text" id="search-input" class="form-control search-input" 
+                                   placeholder="Buscar artículos académicos...">
+                            <button id="search-btn" class="btn btn--primary search-btn">
+                                🔍 Buscar
+                            </button>
+                        </div>
+                        <div id="search-loading" class="search-loading hidden">
+                            <div class="loading-spinner">⏳ Buscando en el servidor...</div>
+                        </div>
+                    </div>
+
+                    <!-- Results Grid -->
+                    <div class="results-section">
+                        <div id="results-header" class="results-header hidden">
+                            <h3 id="results-count">0 artículos encontrados</h3>
+                            <div id="server-info" class="server-info">
+                                <!-- Conectado al servidor: <span id="server-status">🟢 Activo</span> -->
+                            </div>
+                        </div>
+                        
+                        <div id="results-grid" class="results-grid">
+                            <!-- Results will be populated by JavaScript -->
+                        </div>
+                        
+                        <div id="no-results" class="no-results hidden">
+                            <div class="no-results__content">
+                                <h3>🔍 No se encontraron artículos</h3>
+                                <p>Intenta con diferentes términos de búsqueda o ajusta los filtros.</p>
+                            </div>
+                        </div>
+                        
+                        <div id="error-message" class="error-message hidden">
+                            <div class="error-content">
+                                <h3>⚠️ Error de conexión</h3>
+                                <p>No se pudo conectar al servidor. Usando datos de ejemplo.</p>
+                            </div>
+                        </div>
+                        
+                        <div id="welcome-message" class="welcome-message">
+                            <div class="welcome-message__content">
+                                <h2>¡Bienvenido a BioSearch! 🎓</h2>
+                                <p>Realiza tu primera búsqueda para empezar a ganar puntos y desbloquear insignias.</p>
+                                <div class="welcome-stats">
+                                    <div class="stat">
+                                        <span class="stat__icon">🔍</span>
+                                        <span class="stat__text">5 pts por búsqueda</span>
+                                    </div>
+                                    <div class="stat">
+                                        <span class="stat__icon">📖</span>
+                                        <span class="stat__text">10 pts por leer</span>
+                                    </div>
+                                    <div class="stat">
+                                        <span class="stat__icon">🎯</span>
+                                        <span class="stat__text">15 pts por flash cards</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right Sidebar - Rewards -->
+                <aside class="sidebar sidebar--right">
+                    <div class="rewards-panel">
+                        <div class="card">
+                            <div class="card__header">
+                                <h3>🏆 Recompensas</h3>
+                            </div>
+                            <div class="card__body">
+                                <div class="progress-section">
+                                    <div class="points-display">
+                                        <div class="points-main">
+                                            <span id="current-points">0</span>
+                                            <span class="points-label">puntos</span>
+                                        </div>
+                                        <div class="level-display">
+                                            <span id="current-level">Novato</span>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="progress-bar">
+                                        <div id="progress-fill" class="progress-fill"></div>
+                                    </div>
+                                    <div class="progress-text">
+                                        <span id="progress-text">0/50 pts para siguiente nivel</span>
+                                    </div>
+                                </div>
+                                
+                                <div class="badges-section">
+                                    <h4>Insignias</h4>
+                                    <div id="badges-grid" class="badges-grid">
+                                        <!-- Badges will be populated by JavaScript -->
+                                    </div>
+                                </div>
+                                
+                                <div class="streak-section">
+                                    <div class="streak-display">
+                                        <span class="streak-icon">🔥</span>
+                                        <span id="streak-days">0</span>
+                                        <span class="streak-label">días</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </aside>
+            </div>
+        </div>
+    </main>
+
+    <!-- Article Modal -->
+    <div id="article-modal" class="modal hidden">
+        <div class="modal__backdrop"></div>
+        <div class="modal__content">
+            <div class="modal__header">
+                <h2 id="modal-title">Título del Artículo</h2>
+                <button id="modal-close" class="modal__close">✕</button>
+            </div>
+            
+            <div class="modal__body">
+                <div class="article-meta">
+                    <div class="meta-item">
+                        <strong>Autores:</strong> <span id="modal-author">N/A</span>
+                    </div>
+                    <div class="meta-item">
+                        <strong>Año:</strong> <span id="modal-year">N/A</span>
+                    </div>
+                    <div class="meta-item">
+                        <strong>DOI:</strong> <span id="modal-doi">N/A</span>
+                    </div>
+                    <div class="meta-item">
+                        <strong>Score:</strong> <span id="modal-score">N/A</span>
+                    </div>
+                </div>
+                
+                <div id="modal-content-body" class="modal-content-body">
+                    <!-- Content will be populated based on profile -->
+                </div>
+                
+                <!-- Flash Cards Section (only for students) -->
+                <div id="flashcards-section" class="flashcards-section hidden">
+                    <h3>🎯 Flash Cards Interactivas</h3>
+                    <div class="flashcard-container">
+                        <div id="flashcard" class="flashcard">
+                            <div class="flashcard__inner">
+                                <div class="flashcard__front">
+                                    <div class="flashcard__content">
+                                        <p id="flashcard-question">Pregunta aparecerá aquí</p>
+                                    </div>
+                                </div>
+                                <div class="flashcard__back">
+                                    <div class="flashcard__content">
+                                        <p id="flashcard-answer">Respuesta aparecerá aquí</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="flashcard-controls">
+                            <button id="prev-card" class="btn btn--secondary">← Anterior</button>
+                            <span id="card-counter">1 / 3</span>
+                            <button id="next-card" class="btn btn--secondary">Siguiente →</button>
+                        </div>
+                        
+                        <div class="flashcard-actions">
+                            <button id="flip-card" class="btn btn--primary">🔄 Voltear</button>
+                            <button id="complete-study" class="btn btn--outline">✅ Completar Estudio</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="modal__footer">
+                <button id="view-article" class="btn btn--primary">🔗 Ver Artículo Original</button>
+                <button id="modal-cancel" class="btn btn--secondary">Cerrar</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Achievement Notification -->
+    <div id="achievement-notification" class="achievement-notification hidden">
+        <div class="achievement-content">
+            <div class="achievement-icon">🏆</div>
+            <div class="achievement-text">
+                <div class="achievement-title">¡Logro Desbloqueado!</div>
+                <div class="achievement-description" id="achievement-desc">Descripción del logro</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Points Animation -->
+    <div id="points-animation" class="points-animation hidden">
+        <span id="points-text">+5 pts</span>
+    </div>
+
+    <script src="app.js"></script>
+
+        <footer class="site-footer">
+        <div class="container">
+            <p>App web realizada por el equipo <strong>KanCode</strong> © 2025</p>
+        </div>
+    </footer>
+</body>
+</html>
