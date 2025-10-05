@@ -368,7 +368,7 @@ class AcademiSearchApp {
     }
 
     // Variante segura que usa la URL del servidor configurada (recomendada)
-    async getInfo(query = "microgravity", k = 6) {
+    async getInfo(query = "microgravity", k = 10    ) {
         const target = "https://outdoor-gyrostatic-hiedi.ngrok-free.dev/rag"; // intenta reusar SERVER_URL
         const controller = new AbortController();
         const timeoutMs = 8000;
