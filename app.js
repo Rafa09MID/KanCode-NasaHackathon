@@ -342,16 +342,8 @@ class AcademiSearchApp {
         const typeFilter = document.getElementById('type-filter').value;
 
         this.filteredArticles = this.allArticles.filter(articulo => {
-            const matchesSearch = !searchTerm || 
-                articulo.titulo.toLowerCase().includes(searchTerm) ||
-                articulo.abstract.toLowerCase().includes(searchTerm) ||
-                articulo.autor.toLowerCase().includes(searchTerm);
-
-            const matchesTema = !temaFilter || articulo.tema === temaFilter;
             const matchesScore = articulo.score >= scoreFilter;
-            const matchesType = !typeFilter || articulo.tipo === typeFilter;
-
-            return matchesSearch && matchesTema && matchesScore && matchesType;
+            return matchesScore;
         });
 
         // Sort by score (relevance) descending
