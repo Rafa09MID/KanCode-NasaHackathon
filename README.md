@@ -1,4 +1,5 @@
-# BioSearch
+
+#   BIOSEARCH
 
 BioSearch is an intelligent web platform designed to explore, summarize, and visualize NASA’s 608 space bioscience publications. By leveraging artificial intelligence, vector-based search, and knowledge graph technologies, the tool enables users to quickly access relevant information about biological experiments conducted in space and understand their broader impacts.
 
@@ -6,5 +7,18 @@ The system automatically processes scientific texts, provides clear summaries an
 
 This project addresses NASA’s challenge by democratizing access to space biology knowledge, advancing open science, and supporting the future of human exploration beyond Earth.
 
+## Acknowledgements
 
-Url: https://rafa09mid.github.io/KanCode-NasaHackathon/
+ - [NASA´s Space Apps Challenge 2025](https://www.spaceappschallenge.org/2025/challenges/)
+ - [Project Owner] Rafael09MID
+
+ Team members
+ -[Idea Developers] Emilio Cervera and Gustavo Lorenzo
+ -[Backend Developer] Luis May and Franscisco 
+ -[Fronted Devloper and KANCODE leader] Rafael 
+ 
+
+## Demo
+
+Demo Url
+https://rafa09mid.github.io/KanCode-NasaHackathon/
